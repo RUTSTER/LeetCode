@@ -6,30 +6,21 @@ using System.Threading.Tasks;
 
 namespace LeetCode.Problems
 {
-    internal class BestTimeToBuyAndSellStock_121
+    internal class BestTimeToBuyAndSellStock2_122
     {
         public int MaxProfit(int[] prices)
         {
-            var minIndex = 0;
-            var maxIndex = 0;
-            var profits = new List<int>() { 0 };
+            var profit = 0;
 
             for (var i = 1; i < prices.Length; i++)
             {
-                if (prices[i] < prices[minIndex])
-                {
-                    minIndex = i; 
-                    maxIndex = i;
-                }
-
-                if (prices[i] > prices[maxIndex])
+                if (prices[i] > prices[i - 1])
                 {                
-                    maxIndex = i;
-                    profits.Add(prices[maxIndex] - prices[minIndex]);
+                    profit += prices[i] - prices[i - 1];
                 }
             }
 
-            return profits.Max();
+            return profit;
         }
 
         public void Test()
