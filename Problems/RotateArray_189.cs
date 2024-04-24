@@ -8,69 +8,69 @@ namespace LeetCode.Problems
 {
     internal class RotateArray_189
     {
-    public void Rotate(int[] nums, int k)
-    {
-        var shift = k % nums.Length;
-    
-        if (shift == 0)
+        public void Rotate(int[] nums, int k)
         {
-            return;
-        }
-    
-        CascadeReplace(ref nums, 0, shift);
-    
-    
-        var gcd = GetGreatestCommonDivisor(nums.Length, shift);
-        var lcm = GetLeastCommonMultiple(nums.Length, shift, gcd);
-
-        if (lcm % gcd == 0)
-        {
-            for (int i = 1; i < gcd; i++)
+            var shift = k % nums.Length;
+        
+            if (shift == 0)
             {
-                CascadeReplace(ref nums, i, shift);
-            }
-        }
-
-        GC.Collect();
-        }
-
-    private void CascadeReplace(ref int[] nums, int startIndex, int shift)
-    {
-        var targetIndex = startIndex;
-        var length = nums.Length;
-        var storage = nums[targetIndex];
-    
-        while (true)
-        {
-            var sourceIndex = (length + targetIndex - shift) % length;
-            if (sourceIndex == startIndex)
-            {
-                nums[targetIndex] = storage;
                 return;
             }
-    
-            nums[targetIndex] = nums[sourceIndex];
-            targetIndex = sourceIndex;
-        }
-    }
+        
+            CascadeReplace(ref nums, 0, shift);
+        
+        
+            var gcd = GetGreatestCommonDivisor(nums.Length, shift);
+            var lcm = GetLeastCommonMultiple(nums.Length, shift, gcd);
 
-    private int GetGreatestCommonDivisor(int a, int b)
-    {
-        while (a != 0 && b != 0)
+            if (lcm % gcd == 0)
+            {
+                for (int i = 1; i < gcd; i++)
+                {
+                    CascadeReplace(ref nums, i, shift);
+                }
+            }
+
+            GC.Collect();
+        }
+
+        private void CascadeReplace(ref int[] nums, int startIndex, int shift)
         {
-            if (a > b)
-                a %= b;
-            else
-                b %= a;
+            var targetIndex = startIndex;
+            var length = nums.Length;
+            var storage = nums[targetIndex];
+        
+            while (true)
+            {
+                var sourceIndex = (length + targetIndex - shift) % length;
+                if (sourceIndex == startIndex)
+                {
+                    nums[targetIndex] = storage;
+                    return;
+                }
+        
+                nums[targetIndex] = nums[sourceIndex];
+                targetIndex = sourceIndex;
+            }
         }
 
-        return a | b;
-    }
+        private int GetGreatestCommonDivisor(int a, int b)
+        {
+            while (a != 0 && b != 0)
+            {
+                if (a > b)
+                    a %= b;
+                else
+                    b %= a;
+            }
 
-    private int GetLeastCommonMultiple(int a, int b, int gcd)
-    {
-        return (a * b) / gcd;
-    }
+            return a | b;
+        }
+
+        private int GetLeastCommonMultiple(int a, int b, int gcd)
+        {
+            return (a * b) / gcd;
+        }
 
         public void Test()
         {
