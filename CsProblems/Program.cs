@@ -1,4 +1,4 @@
-﻿using LeetCode.Problems;
+﻿using CsProblems.Problems;
 
 new ProblemClass().Test();
 
